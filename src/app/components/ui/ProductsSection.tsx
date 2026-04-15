@@ -1,4 +1,7 @@
-import BuyNowButton from '@/app/components/ui/BuyNowButton';
+'use client';
+
+import { useState } from 'react';
+import PaymentModal from './PaymentsModal';
 
 const products = [
   {
@@ -45,7 +48,15 @@ const products = [
   },
 ];
 
+type SelectedProduct = {
+  id: string;
+  name: string;
+  price: number;
+} | null;
+
 export default function ProductsSection() {
+  const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>(null);
+
   return (
     <section id="products" className="bg-black py-24 px-4 border-t border-white/5">
       <div className="max-w-7xl mx-auto">
@@ -89,16 +100,33 @@ export default function ProductsSection() {
                 <span className="text-white font-bold text-lg">
                   KSh {product.price.toLocaleString()}
                 </span>
-                <BuyNowButton
-                  productId={product.id}
-                  productName={product.name}
-                  productPrice={product.price}
-                />
+                <button
+                  onClick={() =>
+                    setSelectedProduct({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                    })
+                  }
+                  className="text-xs font-semibold bg-green-500 hover:bg-green-400 text-black px-4 py-2 rounded-lg transition-all duration-200"
+                >
+                  Buy Now
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Payment modal */}
+      {selectedProduct && (
+        <PaymentModal
+          productId={selectedProduct.id}
+          productName={selectedProduct.name}
+          productPrice={selectedProduct.price}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </section>
   );
 }
