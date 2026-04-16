@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import ServicesSection from '../components/ui/ServicesSection';
 
 export default function ServicesPage() {
