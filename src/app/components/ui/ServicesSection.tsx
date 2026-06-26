@@ -1,7 +1,7 @@
 const services = [
   {
     id: '1',
-    icon: '🐛',
+    image: '/images/services/pest_control.png',
     name: 'Pest Control',
     description:
       'Complete elimination of cockroaches, ants, bedbugs, rodents and all common household pests using safe, certified chemicals.',
@@ -9,7 +9,7 @@ const services = [
   },
   {
     id: '2',
-    icon: '💨',
+    image: '/images/services/fumigation.png',
     name: 'Fumigation',
     description:
       'Full property fumigation for residential and commercial spaces. We seal and treat the entire premises for lasting results.',
@@ -17,7 +17,7 @@ const services = [
   },
   {
     id: '3',
-    icon: '🧹',
+    image: '/images/services/deep_cleaning.png',
     name: 'Deep Cleaning',
     description:
       'Professional deep cleaning of homes, offices, and rental properties. Move-in and move-out cleaning available.',
@@ -25,7 +25,7 @@ const services = [
   },
   {
     id: '4',
-    icon: '🐀',
+    image: '/images/services/rodent_control.png',
     name: 'Rodent Control',
     description:
       'Targeted rodent extermination and prevention. We identify entry points and seal them to stop re-infestation.',
@@ -33,7 +33,7 @@ const services = [
   },
   {
     id: '5',
-    icon: '🌿',
+    image: '/images/services/lawn_treatment.png',
     name: 'Lawn Treatment',
     description:
       'Pest treatment for gardens, lawns and outdoor spaces. Safe for children and pets after the recommended drying period.',
@@ -41,7 +41,7 @@ const services = [
   },
   {
     id: '6',
-    icon: '🏢',
+    image: '/images/services/commercial_services.png',
     name: 'Commercial Services',
     description:
       'Scheduled maintenance contracts for restaurants, hotels, warehouses and offices. Certificates provided.',
@@ -72,17 +72,24 @@ export default function ServicesSection() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
             <div
               key={service.id}
-              className="group bg-white dark:bg-zinc-900/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/80 border border-zinc-200/80 dark:border-zinc-800/40 hover:border-green-500/30 dark:hover:border-green-500/20 rounded-2xl p-8 shadow-sm hover:shadow transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+              className="group bg-white dark:bg-zinc-900/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/80 border border-zinc-200/80 dark:border-zinc-800/40 hover:border-green-500/30 dark:hover:border-green-500/20 rounded-2xl p-6 shadow-sm hover:shadow transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
             >
               <div>
-                <div className="text-4xl mb-6 select-none bg-zinc-100 dark:bg-zinc-950 border border-zinc-200/30 dark:border-zinc-800/50 w-16 h-16 rounded-xl flex items-center justify-center">
-                  {service.icon}
+                {/* Service Image Banner */}
+                <div className="relative w-full h-48 rounded-xl overflow-hidden mb-6 border border-zinc-200/20 dark:border-zinc-800/40 bg-zinc-100 dark:bg-zinc-950 select-none">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={service.image}
+                    alt={service.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <h3 className="text-zinc-900 dark:text-white font-bold text-xl mb-3">
+                
+                <h3 className="text-zinc-900 dark:text-white font-bold text-xl mb-3 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                   {service.name}
                 </h3>
                 <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed mb-8">

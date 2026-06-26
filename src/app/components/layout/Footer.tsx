@@ -35,11 +35,6 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/#products" className="text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400 text-sm transition-colors">
-                Shop Products
-              </Link>
-            </li>
-            <li>
               <Link href="/#faq" className="text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400 text-sm transition-colors">
                 FAQ & Help
               </Link>

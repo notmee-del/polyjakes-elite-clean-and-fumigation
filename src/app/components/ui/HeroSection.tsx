@@ -40,10 +40,10 @@ export default function HeroSection() {
             Book a Service
           </Link>
           <Link
-            href="/#products"
+            href="/#contact"
             className="w-full sm:w-auto bg-white dark:bg-zinc-900/60 hover:bg-zinc-50 dark:hover:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-bold text-base px-8 py-4 rounded-xl transition-all hover:scale-105 active:scale-95 text-center"
           >
-            Shop Eco-Products
+            Get Free Quote
           </Link>
         </div>
 
