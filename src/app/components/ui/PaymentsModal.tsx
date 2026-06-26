@@ -63,11 +63,11 @@ export default function PaymentModal({
         const script = document.createElement('script');
         script.src = 'https://checkout.flutterwave.com/v3.js';
         script.onload = () => {
-          // @ts-ignore
+          // @ts-expect-error - Flutterwave SDK is loaded dynamically
           window.FlutterwaveCheckout({
             public_key: process.env.NEXT_PUBLIC_FLW_PUBLIC_KEY,
             ...data.payload,
-            callback: (response: any) => {
+            callback: (response: { status: string }) => {
               console.log('M-Pesa response:', response);
               if (response.status === 'successful') {
                 window.location.href = '/payment/success';

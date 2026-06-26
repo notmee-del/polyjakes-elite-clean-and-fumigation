@@ -49,46 +49,50 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="bg-black py-24 px-4 border-t border-white/5">
-      <div className="max-w-3xl mx-auto">
+    <section id="faq" className="relative py-24 px-4 overflow-hidden border-t border-zinc-200/50 dark:border-zinc-800/30">
+      
+      {/* Subtle background glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-80 h-80 bg-green-500/5 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Section header */}
+      <div className="relative max-w-3xl mx-auto z-10">
+
+        {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="text-green-400 text-sm font-medium uppercase tracking-widest">
+          <span className="text-green-600 dark:text-green-400 text-sm font-semibold uppercase tracking-wider">
             FAQ
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mt-3 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 dark:text-white mt-3 mb-4">
             Common Questions
           </h2>
-          <p className="text-white/50 text-lg">
-            Everything you need to know before booking.
+          <p className="text-zinc-500 dark:text-zinc-400 text-lg">
+            Everything you need to know before booking our services.
           </p>
         </div>
 
         {/* FAQ items */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {faqs.map((faq) => (
             <div
               key={faq.id}
-              className="border border-white/10 hover:border-white/20 rounded-2xl overflow-hidden transition-all duration-200"
+              className="bg-white dark:bg-zinc-900/20 border border-zinc-200 dark:border-zinc-800/50 hover:border-zinc-300 dark:hover:border-zinc-700 rounded-2xl overflow-hidden transition-all duration-300 shadow-sm"
             >
-              {/* Question row */}
+              {/* Question Row */}
               <button
                 onClick={() => toggle(faq.id)}
-                className="w-full flex items-center justify-between px-6 py-5 text-left bg-white/5 hover:bg-white/10 transition-colors duration-200"
+                className="w-full flex items-center justify-between px-6 py-5 text-left bg-zinc-50/50 dark:bg-zinc-900/10 hover:bg-zinc-100/50 dark:hover:bg-zinc-900/30 transition-colors duration-200 cursor-pointer"
               >
-                <span className="text-white font-medium text-base pr-4">
+                <span className="text-zinc-900 dark:text-white font-bold text-base pr-4">
                   {faq.question}
                 </span>
-                <span className="text-green-400 text-xl flex-shrink-0">
+                <span className="text-green-600 dark:text-green-400 text-xl font-bold flex-shrink-0 w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
                   {openId === faq.id ? '−' : '+'}
                 </span>
               </button>
 
-              {/* Answer */}
+              {/* Answer Row */}
               {openId === faq.id && (
-                <div className="px-6 py-5 bg-black border-t border-white/5">
-                  <p className="text-white/60 text-sm leading-relaxed">
+                <div className="px-6 py-5 bg-white dark:bg-zinc-950/20 border-t border-zinc-100 dark:border-zinc-900/40">
+                  <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
@@ -98,14 +102,14 @@ export default function FAQSection() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-14">
-          <p className="text-white/40 text-sm mb-4">Still have questions?</p>
-          
-            <a href="tel:+254726108507"
-            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-black font-bold px-6 py-3 rounded-xl transition-all"
-            >
-              📞 Call Us Now
-            </a>
+        <div className="text-center mt-16 pt-4">
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm mb-4">Still have questions?</p>
+          <a
+            href="tel:+254726108507"
+            className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-400 text-black font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-green-500/10 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+          >
+            📞 Call Us Now
+          </a>
         </div>
       </div>
     </section>
