@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { checkRateLimit } from '@/lib/rateLimiter';
+import { auth0 } from '@/lib/auth0';
 
 const PaymentSchema = z.object({
   productName: z.string().min(1).max(200),
   productPrice: z.number().min(1).max(1000000),
   productId: z.string().min(1),
-  paymentMethod: z.enum (['card', 'mpesa']),
+  paymentMethod: z.enum(['card', 'mpesa']),
   phone: z.string().optional(),
 });
 
@@ -25,8 +25,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Check user is logged in
-    const supabase = await createServerSupabaseClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const session = await auth0.getSession();
+    const user = session?.user;
 
     if (!user) {
       return NextResponse.json(
@@ -58,13 +58,13 @@ export async function POST(request: NextRequest) {
       currency: 'KES',
       redirect_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment/success`,
       meta: {
-        user_id: user.id,
+        user_id: user.sub,
         product_id: productId,
       },
       customer: {
         email: user.email,
         phonenumber: phone ?? '',
-        name: user.email,
+        name: user.name || user.email,
       },
       customizations: {
         title: 'PolyJakes Elite',

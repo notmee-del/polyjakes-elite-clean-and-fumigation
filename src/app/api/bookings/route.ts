@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createServerSupabaseClient, createAdminSupabaseClient } from '@/lib/supabase/server';
+import { createAdminSupabaseClient } from '@/lib/supabase/server';
 import { checkRateLimit } from '@/lib/rateLimiter';
+import { auth0 } from '@/lib/auth0';
 
 const BookingSchema = z.object({
   service: z.string().min(1, 'Service is required').max(100),
@@ -26,8 +27,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = await createServerSupabaseClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const session = await auth0.getSession();
+    const user = session?.user;
 
     if (!user) {
       return NextResponse.json(
@@ -63,7 +64,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await adminSupabase
       .from('bookings')
       .insert({
-        user_id: user.id,
+        user_id: user.sub,
         service,
         date,
         location,
@@ -107,8 +108,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const supabase = await createServerSupabaseClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const session = await auth0.getSession();
+    const user = session?.user;
 
     if (!user) {
       return NextResponse.json(
@@ -117,9 +118,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { data: bookings, error } = await supabase
+    const adminSupabase = createAdminSupabaseClient();
+    const { data: bookings, error } = await adminSupabase
       .from('bookings')
       .select('*')
+      .eq('user_id', user.sub)
       .order('created_at', { ascending: false });
 
     if (error) {

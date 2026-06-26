@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/layout/navbar';
 import Footer from './components/layout/Footer';
+import { Auth0Provider } from '@auth0/nextjs-auth0/client';
+import { auth0 } from '@/lib/auth0';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -11,11 +13,13 @@ export const metadata: Metadata = {
   description: 'Professional fumigation, pest control, and cleaning services.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth0.getSession();
+
   return (
     <html lang="en" className="dark" style={{ scrollBehavior: 'smooth' }}>
       <head>
@@ -37,9 +41,11 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 antialiased min-h-screen flex flex-col`}>
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <Auth0Provider user={session?.user}>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </Auth0Provider>
       </body>
     </html>
   );

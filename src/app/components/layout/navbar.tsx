@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const { user, isLoading } = useUser();
 
   // Sync state with DOM class on mount
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function Navbar() {
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-zinc-200/50 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer transition-all duration-200"
+              className="p-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-zinc-200/50 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer transition-all duration-200 mr-2"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
@@ -75,12 +77,31 @@ export default function Navbar() {
               )}
             </button>
 
-            <Link
-              href="/login"
-              className="bg-green-500 hover:bg-green-400 text-black font-bold text-sm px-5 py-2.5 rounded-xl transition-all shadow-md shadow-green-500/10 hover:shadow-green-500/20 hover:scale-105 active:scale-95"
-            >
-              Login
-            </Link>
+            {!isLoading && (
+              user ? (
+                <div className="flex items-center gap-4">
+                  <Link
+                    href="/dashboard"
+                    className="text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-400 text-sm font-semibold transition-colors"
+                  >
+                    Dashboard
+                  </Link>
+                  <a
+                    href="/auth/logout"
+                    className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-800 font-bold text-sm px-4 py-2.5 rounded-xl transition-all"
+                  >
+                    Logout
+                  </a>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="bg-green-500 hover:bg-green-400 text-black font-bold text-sm px-5 py-2.5 rounded-xl transition-all shadow-md shadow-green-500/10 hover:shadow-green-500/20 hover:scale-105 active:scale-95"
+                >
+                  Login
+                </Link>
+              )
+            )}
           </div>
 
           {/* Mobile Right Bar */}
@@ -132,13 +153,31 @@ export default function Navbar() {
             <Link href="/#faq" className="text-zinc-600 dark:text-zinc-400 hover:text-green-500 font-semibold text-sm transition-colors" onClick={() => setMenuOpen(false)}>
               FAQ
             </Link>
-            <Link
-              href="/login"
-              className="bg-green-500 text-black font-bold text-center text-sm px-4 py-3 rounded-xl shadow-md"
-              onClick={() => setMenuOpen(false)}
-            >
-              Login
-            </Link>
+            
+            {!isLoading && (
+              user ? (
+                <>
+                  <Link href="/dashboard" className="text-zinc-600 dark:text-zinc-400 hover:text-green-500 font-semibold text-sm transition-colors" onClick={() => setMenuOpen(false)}>
+                    Dashboard
+                  </Link>
+                  <a
+                    href="/auth/logout"
+                    className="bg-zinc-200 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-bold text-center text-sm px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Logout
+                  </a>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="bg-green-500 text-black font-bold text-center text-sm px-4 py-3 rounded-xl shadow-md"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )
+            )}
           </div>
         )}
       </div>

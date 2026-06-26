@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getStripe } from '@/lib/stripe';
-import { createServerSupabaseClient } from '@/lib/supabase/server';
 import { checkRateLimit } from '@/lib/rateLimiter';
+import { auth0 } from '@/lib/auth0';
 
 const PaymentSchema = z.object({
   productName: z.string().min(1).max(200),
@@ -24,8 +24,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Check user is logged in
-    const supabase = await createServerSupabaseClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const session = await auth0.getSession();
+    const user = session?.user;
 
     if (!user) {
       return NextResponse.json(
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     const { productName, productPrice, productId } = result.data;
 
     // Create Stripe checkout session
-    const session = await getStripe().checkout.sessions.create({
+    const stripeSession = await getStripe().checkout.sessions.create({
       payment_method_types: ['card', 'paypal'],
       mode: 'payment',
       customer_email: user.email,
@@ -66,14 +66,14 @@ export async function POST(request: NextRequest) {
         },
       ],
       metadata: {
-        user_id: user.id,
+        user_id: user.sub,
         product_id: productId,
       },
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment/cancel`,
     });
 
-    return NextResponse.json({ url: session.url }, { status: 200 });
+    return NextResponse.json({ url: stripeSession.url }, { status: 200 });
 
   } catch (err) {
     console.error('Payment API error:', err);
