@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
+import AdBanner from '../components/ui/AdBanner';
 
 export default function PrivacyPage() {
   const sections = [
@@ -73,6 +74,8 @@ export default function PrivacyPage() {
             </div>
           ))}
         </div>
+
+        <AdBanner adSlot="privacy_page_mid" />
 
         {/* Contact Info Footer */}
         <div className="p-8 bg-white dark:bg-zinc-900/30 border border-zinc-200/80 dark:border-zinc-800/40 rounded-2xl">

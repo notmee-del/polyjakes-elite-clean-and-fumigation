@@ -7,6 +7,7 @@ import AboutSection from './components/ui/AboutSection';
 import ServicesSection from './components/ui/ServicesSection';
 import ContactSection from './components/ui/ContactSection';
 import FAQSection from './components/ui/FAQSection';
+import AdBanner from './components/ui/AdBanner';
 
 export default async function HomePage() {
   const session = await auth0.getSession();
@@ -20,6 +21,7 @@ export default async function HomePage() {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
+      <AdBanner adSlot="homepage_mid" />
       <ContactSection />
       <FAQSection />
     </>

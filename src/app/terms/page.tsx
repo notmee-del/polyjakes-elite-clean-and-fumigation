@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
+import AdBanner from '../components/ui/AdBanner';
 
 export default function TermsPage() {
   const sections = [
@@ -13,12 +14,12 @@ export default function TermsPage() {
       content: 'We provide residential and commercial pest control, fumigation, and deep cleaning services. Bookings are subject to availability. By scheduling a service, you agree to provide our technicians with access to the specified premises at the scheduled time. Cancellations must be made at least 24 hours prior to the scheduled service time to avoid a cancellation fee.',
     },
     {
-      title: '3. Products & Purchases',
-      content: 'We offer professional-grade pest control products for sale. Prices for all products are subject to change. Payment must be made at the time of purchase using our secure gateways. We reserve the right to limit sales or refuse service to any person or geographic region.',
+      title: '3. Payments & Secure Gateways',
+      content: 'All service fees are due at the time of booking or upon service completion as specified. Payments are securely processed via Stripe and Flutterwave. We reserve the right to limit services or refuse booking to any person or geographic region.',
     },
     {
-      title: '4. Returns & Refunds Policy',
-      content: 'Product returns are accepted within 7 days of delivery, provided the item is unopened, unused, and in its original packaging. For services, if you are not fully satisfied, you must notify us within 24 hours of service completion, and we will work to resolve the issue under our 30-day satisfaction guarantee.',
+      title: '4. Refund & Service Guarantee Policy',
+      content: 'Refunds are handled case-by-case. For our services, if you are not fully satisfied, you must notify us within 24 hours of service completion, and we will work to resolve the issue under our 30-day satisfaction guarantee, including complimentary re-treatment if necessary.',
     },
     {
       title: '5. Customer Responsibilities',
@@ -26,7 +27,7 @@ export default function TermsPage() {
     },
     {
       title: '6. Limitation of Liability',
-      content: 'To the maximum extent permitted by law, PolyJakes and its technicians shall not be liable for any indirect, incidental, or consequential damages resulting from the use or inability to use our services or products. Our total liability for any claim shall not exceed the amount paid by you for the specific service or product in question.',
+      content: 'To the maximum extent permitted by law, PolyJakes and its technicians shall not be liable for any indirect, incidental, or consequential damages resulting from the use or inability to use our services. Our total liability for any claim shall not exceed the amount paid by you for the specific service in question.',
     },
     {
       title: '7. Governing Law',
@@ -73,6 +74,8 @@ export default function TermsPage() {
             </div>
           ))}
         </div>
+
+        <AdBanner adSlot="terms_page_mid" />
 
         {/* Support Info Box */}
         <div className="p-8 bg-white dark:bg-zinc-900/30 border border-zinc-200/80 dark:border-zinc-800/40 rounded-2xl">
