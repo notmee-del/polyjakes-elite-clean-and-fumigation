@@ -24,6 +24,11 @@ export default async function RootLayout({
     <html lang="en" className="dark" style={{ scrollBehavior: 'smooth' }}>
       <head>
         <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7527158994418895"
+          crossOrigin="anonymous"
+        />
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Script from 'next/script';
 
 interface AdBannerProps {
   adSlot?: string;
@@ -64,14 +63,6 @@ export default function AdBanner({
       <span className="text-[10px] uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-semibold mb-2 select-none">
         Advertisement
       </span>
-
-      {/* Script injected dynamically on the page where AdBanner is rendered */}
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7527158994418895"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
 
       <div className="w-full max-w-[728px] flex justify-center bg-zinc-100/50 dark:bg-zinc-900/10 border border-zinc-250 dark:border-zinc-800/30 rounded-2xl p-3 min-h-[90px] shadow-sm">
         <ins
